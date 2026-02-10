@@ -1,21 +1,15 @@
 import React, { useState } from 'react'
 import '../style/addtask.css'
 import { useNavigate } from 'react-router-dom'
+import API from '../api'
 
 function AddTask() {
   const [taskData, setTaskData] = useState({ title:'', description:'' })
   const navigate = useNavigate()
 
   const handleAddTask = async () => {
-    let result = await fetch('https://todo-backend-six-beta.vercel.app/add-task',{
-      method:'POST',
-      credentials:'include',
-      body: JSON.stringify(taskData),
-      headers:{ 'Content-Type':'application/json' }
-    })
-
-    result = await result.json()
-    if(result.success) navigate('/')
+    const { data } = await API.post('/add-task', taskData)
+    if(data.success) navigate('/')
   }
 
   return (

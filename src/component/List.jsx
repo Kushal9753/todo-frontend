@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import '../style/list.css'
 import { Link } from 'react-router-dom'
+import API from '../api'
 
 function List() {
   const [taskData, setTaskData] = useState([])
@@ -9,28 +10,17 @@ function List() {
   useEffect(()=>{ getListData() },[])
 
   const getListData = async () => {
-    let list = await fetch('https://todo-backend-six-beta.vercel.app/tasks',{
-      credentials:'include'
-    })
-    list = await list.json()
-    if(list.success) setTaskData(list.result)
+    const { data } = await API.get('/tasks')
+    if(data.success) setTaskData(data.result)
   }
 
   const deleteTask = async (id) => {
-    await fetch(`https://todo-backend-six-beta.vercel.app/delete/${id}`,{
-      method:'DELETE',
-      credentials:'include'
-    })
+    await API.delete(`/delete/${id}`)
     getListData()
   }
 
   const deleteMultiple = async () => {
-    await fetch('https://todo-backend-six-beta.vercel.app/delete-multiple',{
-      method:'DELETE',
-      credentials:'include',
-      body: JSON.stringify(selectedTask),
-      headers:{ 'Content-Type':'application/json' }
-    })
+    await API.delete('/delete-multiple', { data: selectedTask })
     getListData()
   }
 

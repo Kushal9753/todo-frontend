@@ -1,34 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import '../style/addtask.css'
 import { Link, useNavigate } from 'react-router-dom'
+import API from '../api'
 
 function SignUp() {
   const [userData, setUserData] = useState({})
   const navigate = useNavigate()
 
   useEffect(()=>{
-    if(localStorage.getItem('login')){
-      navigate('/')
-    }
+    if(localStorage.getItem('login')) navigate('/')
   },[])
 
   const handleSignup = async () => {
-    let result = await fetch('https://todo-backend-six-beta.vercel.app/signup', {
-      method: 'POST',
-      credentials: 'include',
-      body: JSON.stringify(userData),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    const { data } = await API.post('/signup', userData)
 
-    result = await result.json()
-
-    if (result.success) {
+    if (data.success) {
       localStorage.setItem('login', userData.email)
       navigate('/')
     } else {
-      alert("try after some time")
+      alert("Try again")
     }
   }
 
@@ -37,25 +27,13 @@ function SignUp() {
       <h1>Sign Up</h1>
 
       <label>Name</label>
-      <input
-        type="text"
-        placeholder="Enter User name"
-        onChange={(e)=>setUserData({...userData,name:e.target.value})}
-      />
+      <input onChange={(e)=>setUserData({...userData,name:e.target.value})} />
 
       <label>Email</label>
-      <input
-        type="text"
-        placeholder="Enter User email"
-        onChange={(e)=>setUserData({...userData,email:e.target.value})}
-      />
+      <input onChange={(e)=>setUserData({...userData,email:e.target.value})} />
 
       <label>Password</label>
-      <input
-        type="password"
-        placeholder="Enter User password"
-        onChange={(e)=>setUserData({...userData,password:e.target.value})}
-      />
+      <input type="password" onChange={(e)=>setUserData({...userData,password:e.target.value})} />
 
       <button onClick={handleSignup} className='submit'>Sign Up</button>
       <Link className='link' to="/login">Login</Link>
