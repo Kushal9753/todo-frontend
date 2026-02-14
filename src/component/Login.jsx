@@ -14,12 +14,15 @@ function Login() {
  const handleLogin = async () => {
     const { data } = await API.post('/login', userData)
 
-   if (data.success) {
-  localStorage.setItem("token", data.token);   // ⭐️ NEW
+
+if (data.success) {
+  localStorage.setItem("token", data.token);
   localStorage.setItem("login", userData.email);
-  window.dispatchEvent(new Event('localStorage-change'));
-  navigate('/');
+  window.location.href = "/";   // ⭐️ IMPORTANT
 }
+
+
+
  else {
       alert("Try again")
     }
