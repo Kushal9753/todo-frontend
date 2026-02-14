@@ -7,10 +7,15 @@ function AddTask() {
   const [taskData, setTaskData] = useState({ title:'', description:'' })
   const navigate = useNavigate()
 
-  const handleAddTask = async () => {
+const handleAddTask = async () => {
+  try {
     const { data } = await API.post('/add-task', taskData)
     if(data.success) navigate('/')
+  } catch (err) {
+    alert("Server error")
   }
+}
+
 
   return (
     <div className='container'>

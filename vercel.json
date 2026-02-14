@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://todo-backend-tnme.onrender.com/$1"
+    }
+  ]
+}
