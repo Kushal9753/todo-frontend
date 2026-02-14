@@ -14,11 +14,13 @@ function Login() {
  const handleLogin = async () => {
     const { data } = await API.post('/login', userData)
 
-    if (data.success) {
-      localStorage.setItem('login', userData.email)
-      window.dispatchEvent(new Event('localStorage-change'))
-      navigate('/')
-    } else {
+   if (data.success) {
+  localStorage.setItem("token", data.token);   // ⭐️ NEW
+  localStorage.setItem("login", userData.email);
+  window.dispatchEvent(new Event('localStorage-change'));
+  navigate('/');
+}
+ else {
       alert("Try again")
     }
  }

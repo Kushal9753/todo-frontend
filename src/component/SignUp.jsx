@@ -14,10 +14,12 @@ function SignUp() {
   const handleSignup = async () => {
     const { data } = await API.post('/signup', userData)
 
-    if (data.success) {
-      localStorage.setItem('login', userData.email)
-      navigate('/')
-    } else {
+   if (data.success) {
+  localStorage.setItem("token", data.token);   // ⭐️ NEW
+  localStorage.setItem("login", userData.email);
+  navigate('/');
+}
+else {
       alert("Try again")
     }
   }

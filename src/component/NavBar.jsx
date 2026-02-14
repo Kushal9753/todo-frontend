@@ -9,7 +9,9 @@ function NavBar() {
   const navigate = useNavigate()
 
   const logout = () => {
-    localStorage.removeItem('login')
+    localStorage.removeItem("login");
+localStorage.removeItem("token");  // ⭐️ NEW
+
     setLogin(null)
     setTimeout(() => {
     navigate('/login')
