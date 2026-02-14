@@ -3,6 +3,10 @@
     {
       "source": "/api/(.*)",
       "destination": "https://todo-backend-tnme.onrender.com/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
